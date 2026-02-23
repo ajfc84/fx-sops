@@ -1,0 +1,47 @@
+env:
+  global:
+    CI_PROJECT_NAME: fx-sops
+    REGISTRY_IMAGE: "${CI_PROJECT_PATH}/${CI_PROJECT_NAME}"
+    SRC_DIR: build
+stages:
+  compile:
+    tasks:
+      - type: shell
+        exec: compile
+  build:
+    tasks:
+      - type: go
+        exec: DockerBuild
+  publish:
+    tasks:
+      - type: go
+        exec: DockerPush
+  install:
+    tasks:
+      - type: shell
+        exec: install
+  deploy:
+    tasks:
+      - type: shell
+        exec: deploy
+vm_list:
+  - vm: 'hz001'
+    type: 'config'
+    os: 'linux'
+    restart: 'no'
+    playbooks:
+      - fx.crypto.age
+      - fx.container.docker_run
+    volumes:
+      - secrets:/app/secrets:rw
+      - /var/www/age:/app/age:ro
+  - vm: 'hz002'
+    type: 'config'
+    os: 'linux'
+    restart: 'no'
+    playbooks:
+      - fx.crypto.age
+      - fx.container.docker_run
+    volumes:
+      - secrets:/app/secrets:rw
+      - /var/www/age:/app/age:ro

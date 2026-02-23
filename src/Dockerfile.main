@@ -1,0 +1,11 @@
+FROM ghcr.io/getsops/sops:v3.11.0
+
+ENV SOPS_AGE_KEY_FILE=/app/age/key.txt
+
+WORKDIR /app
+
+COPY secrets.main.yml /app/secrets.yaml
+
+RUN mkdir -p /app/secrets /app/age
+
+CMD ["-d", "--output", "/app/secrets/secrets.yaml", "/app/secrets.yaml"]
