@@ -4,7 +4,7 @@ ENV SOPS_AGE_KEY_FILE=/app/age/key.txt
 
 WORKDIR /app
 
-COPY secrets.qa.yml /app/secrets.yaml
+COPY secrets.yml /app/secrets.yaml
 
 RUN mkdir -p /app/secrets /app/age
 
