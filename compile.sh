@@ -2,7 +2,6 @@
 
 . "${CI_PROJECT_DIR}/buildSh/utils.sh"
 
-mk_build
 
 cp_src "build" "src"
 
